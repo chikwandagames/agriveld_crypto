@@ -1158,7 +1158,20 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     if (halvings >= 64)
         return 0;
 
-    CAmount nSubsidy = 50 * COIN;
+    // Set premine block, 
+    // If nining is on the first block keep reward = 10000000
+    // nHeigth == block number
+    CAmount nSubsidy;
+    if (nHeight == 1) {
+        nSubsidy = 10000000;
+    }
+    else {
+        // Reward == 100 coins
+        nSubsidy = 100;
+    }
+
+    // Set reward number of coins
+    CAmount nSubsidy = 100 * COIN;
     // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
     nSubsidy >>= halvings;
     return nSubsidy;
