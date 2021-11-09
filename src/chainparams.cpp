@@ -103,19 +103,21 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xfb;
+        pchMessageStart[0] = 0xf6;
         pchMessageStart[1] = 0xc0;
         pchMessageStart[2] = 0xb6;
         pchMessageStart[3] = 0xdb;
-        nDefaultPort = 9333;
+        // Port for syncing data with other nodes
+        // Bitcoin port == 8333, Litecoin port == 9333
+        nDefaultPort = 6333;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 22;
         m_assumed_chain_state_size = 3;
 
-        genesis = CreateGenesisBlock(1317972665, 2084524493, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1636449316, 2001428073, 0x1e0ffff0, 1, 100 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2"));
-        assert(genesis.hashMerkleRoot == uint256S("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
+        assert(consensus.hashGenesisBlock == uint256S("0x641c4281b981bb30afca875088e8640d26e923e1d389424a5d539fb9068b8357"));
+        assert(genesis.hashMerkleRoot == uint256S("0x4b37a7ae049fee1b0054552162250c7c443fccba11f26b8beeeb5e3258e9a930"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -127,7 +129,9 @@ public:
         vSeeds.emplace_back("dnsseed.litecointools.com");
         vSeeds.emplace_back("dnsseed.litecoinpool.org");
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,48);
+        // Changed 48 to 23 because Agri... starts with an A
+        // see https://en.bitcoin.it/wiki/List_of_address_prefixes
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,23);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
         base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,50);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,176);
@@ -165,8 +169,8 @@ public:
 
         chainTxData = ChainTxData{
             // Data from rpc: getchaintxstats 4096 2cdba8c47858d34cf0e02dfb8733263a3ed8705b1663ec7c158783d77b93e7ee
-            /* nTime    */ 1565379143,
-            /* nTxCount */ 36299075,
+            /* nTime    */ 1636449316,
+            /* nTxCount */ 0,
             /* dTxRate  */ 0.388813310286546
         };
 
